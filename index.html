@@ -8,9 +8,29 @@
 
   <body>
     
-    <div class="container"> 
+    <div class="container">
+      
+       
       <div class="box-load" id="boxLoad">
         <p class="text-load">Пожалуйста подождите комментарии загружаются ...</p>
+      </div>
+      <div class="add-form form-authorization">
+        <input
+          type="text"
+          class="add-form-name login-authorization"
+          placeholder="Введите логин" 
+          id="login-input"
+        />
+        <textarea
+          type="textarea"
+          class="add-form-text password-authorization"
+          placeholder="Введите пароль"
+          
+          id="password-input"
+        ></textarea>
+        <div class="add-form-row add-authorization">
+          <button class="add-form-button button-authorization" id="addButton">Войти</button>
+        </div>
       </div>
         
         
@@ -21,9 +41,11 @@
         <!-- Список ренедерится из API -->
 
       </ul>
+      
       <div class="box-load-new">
         <p class="text-load-new">Комментарий загружается ...</p>
       </div>
+      
       <div class="add-form">
         <input
           type="text"
