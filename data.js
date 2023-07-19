@@ -10,22 +10,5 @@ export const dataTime = (date) => {
     let minuts = nowDate.setTime(nowDate.getMinutes()); return `${now}.${mounts[mounth]}.${year} ${time}:${minuts}`
 }; dataTime (new Date());
 
-export const getListUsersEdit = (user, index) => {
-return `<li class="comment" data-index="${index}">
-          <div class="comment-header">
-            <div> ${user.name}</div>
-            <div>${user.date}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${user.comments}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">${user.like}</span>
-              <button class="like-button ${user.active}" data-index = ${index}></button>
-            </div>
-        </li>`
-}
+
 
