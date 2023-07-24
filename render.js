@@ -1,80 +1,36 @@
-import { listElement, likeFunctions, users, renderTask, token } from "./script.js";
-import { fetchPost, fetchPromise, } from "./api.js";
-import { renderAuthLink } from "./component/auth-link.js";
-import { renderLoginForm, loginFormTemplate } from "./component/login-form.js";
+import { listElement, likeFunctions, users, addNewComment,} from "./script.js";
+import {fetchPromise} from "./api.js";
+import { renderAuthLink} from "./component/auth-link.js";
+import { addNewForm } from "./component/comment-form.js";
+import { existingUser, newUser } from "./component/login-form.js";
 
+// Рендер функция
 
-
-export const getListUsersEdit = (user, index) => {
-    return `<li class="comment" data-index="${index}">
-              <div class="comment-header">
-                <div> ${user.name}</div>
-                <div>${user.date}</div>
-              </div>
-              <div class="comment-body">    
-                <div class="comment-text">
-                  ${user.comments}
-                </div>
-              </div>
-              <div class="comment-footer">
-                <div class="likes">
-                  <span class="likes-counter">${user.like}</span>
-                  <button class="like-button ${user.active}" data-index = ${index}></button>
-                </div>
-            </li>`
-    }
-
-const addNewForm = (element) => {
-  return ` 
-    <ul class="comments" id="list">
-    ${element}
-  </ul>
+export const renderTaskUsers = (element, getListUsers, token) => {
+  const usersHtml = users.map((user, index) => getListUsers(user, index, token)).join(''); 
   
-  <div class="box-load-new">
-    <p class="text-load-new">Комментарий загружается ...</p>
-  </div>
-  
-  <div class="add-form">
-    <input
-      type="text"
-      class="add-form-name"
-      placeholder="Введите ваше имя" 
-      id="name-input"
-    />
-    <textarea
-      type="textarea"
-      class="add-form-text"
-      placeholder="Введите ваш коментарий"
-      rows="4"
-      id="comment-input"
-    ></textarea>
-    <div class="add-form-row">
-      <button class="add-form-button" id="addButton">Написать</button>
-    </div>
-  </div>`
-  
-};
 
-export const renderUsers = (element, getListUsers, token) => {
-  if(!token) {
-    element.innerHTML = loginFormTemplate;
-    document.getElementById("loginButton").addEventListener("click", () => {
-      token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
-      renderUsers(listElement, getListUsersEdit, token); console.log(token);
-      
-
-    })
+  if(!token) { 
+    element.innerHTML = usersHtml;
+    
+    renderAuthLink(listElement, token);
+    
     return;
-  }
-    const usersHtml = users.map((user, index) => getListUsers(user, index)).join(''); 
-    
+  };
+
     element.innerHTML = addNewForm(usersHtml); 
+
     const nameInput = document.getElementById("name-input");
-    const commentInput = document.getElementById("comment-input");
-    renderTask(nameInput, commentInput, token);
+    const commentInput = document.getElementById("comment-input");  
     
-    likeFunctions(token);   
-         
+    addNewComment(nameInput, commentInput, token); 
+    likeFunctions(token); 
+
+    nameInput.disabled = true;
+    if (existingUser != null)
+    nameInput.value = existingUser;
+    else{nameInput.value = newUser;}
+   
   
     // Функция ответа на комментарий 
   
@@ -88,6 +44,5 @@ export const renderUsers = (element, getListUsers, token) => {
                 fetchPromise(token);
             })
         }; 
-    }; answerComment();  
-     
+    }; answerComment();     
 }; 

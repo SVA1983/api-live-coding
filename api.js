@@ -1,8 +1,13 @@
 import { dataTime } from "./data.js";
-import { token, listElement } from "./script.js";
-import { renderUsers } from "./render.js";
-const host = "https://wedev-api.sky.pro/api/v2/vlad-smirnov/comments";
 
+
+// документация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/v2/%5Bkey%5D/comments/README.md
+
+// Адрес Апи
+
+export const host = "https://wedev-api.sky.pro/api/v2/vlad-smirnov/comments";
+
+// Запрос на Апи (загрузка существующих)
 
 export const fetchPromise = (token) => {
     return fetch(host,
@@ -10,8 +15,7 @@ export const fetchPromise = (token) => {
         method: "GET",
         headers: {
           Authorization: token,
-        }
-        
+        }   
     })
     .then((response) => {
       if(response.status == 401) {
@@ -35,6 +39,9 @@ export const fetchPromise = (token) => {
     });   
 }; 
 
+
+// Запрос на Апи (добавление)
+
 export const fetchPost = (text, name, token) => {
     return fetch(host,
     {
@@ -46,9 +53,47 @@ export const fetchPost = (text, name, token) => {
         }),
         headers: {
           Authorization: token,
-        },
-        
-        
+      },      
     }); 
+};
+
+// Запрос на Апи (Вход)
+
+export const loginUser = ({login, password}, ) => {
+  return fetch( "https://wedev-api.sky.pro/api/user/login",
+  {
+      method: "POST",
+      body: JSON.stringify(
+      { 
+          login,
+          password,
+      }),      
+  }).then((response) => { 
+    if (response.status === 400) { 
+      throw new Error("Не верный логин или пароль");  
+
+    } ;
+    return response.json(); 
+  });
+};
+
+// Запрос на Апи (Регистрация)
+
+export const regUser = ({name, login, password}) => {
+  return fetch( "https://wedev-api.sky.pro/api/user",
+  {
+      method: "POST",
+      body: JSON.stringify(
+      { 
+          name,
+          login,
+          password,
+      }),    
+  }).then((response) => { 
+    if (response.status === 400) {
+      throw new Error("Такой пользователь уже есть");  
+    }
+    return response.json();
+  });
 };
     

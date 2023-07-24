@@ -3,6 +3,7 @@ body {
 }
 
 .container {
+  gap: 25px;
   font-family: Helvetica;
   color: #ffffff;
   display: flex;
@@ -12,6 +13,11 @@ body {
   padding-bottom: 200px;
   background: #202020;
   min-height: 100vh;
+}
+
+.authorization {
+  padding-top: 10px;
+  text-decoration: underline;
 }
 
 .box-load {
@@ -73,7 +79,10 @@ body {
 .comment-footer {
   display: flex;
   justify-content: flex-end;
+  justify-content: space-between;
+  flex-direction: row-reverse;
 }
+
 
 .comment-body {
   margin-top: 32px;
@@ -93,6 +102,16 @@ body {
   all: unset;
   cursor: pointer;
 }
+.del {
+  
+  font-size: 16px;
+  
+  background-color: #bcec30;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  
 
 .likes-counter {
   font-size: 26px;
@@ -137,6 +156,9 @@ body {
   height: 40px;
   padding-left: 16px;
 
+}
+.name-registration {
+  margin-bottom: 12px;
 }
 
 

@@ -1,9 +1,7 @@
 
-import { fetchPromise, fetchPost, } from "./api.js";
-import { getListUsersEdit } from "./render.js";
-import { renderUsers } from "./render.js";
-
-   
+import { fetchPromise, fetchPost, loginUser, } from "./api.js";
+import { getListUsersEdit } from "./component/users-form.js";
+import { renderTaskUsers } from "./render.js"; 
 
 export const listElement = document.querySelector(".container");
 export const nameInput = document.getElementById("name-input");
@@ -13,32 +11,35 @@ export const textName = document.querySelectorAll(".add-form-name");
 export const textComment = document.querySelectorAll(".add-form-text");
 export const comBox = document.querySelector(".box-load");
 export const comBoxNew = document.querySelector(".box-load-new");
+
+// Переменная с токеном
+
 export let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
 token = null;
+
+
+
+const activLoad = () => {
+  return comBox.classList.add("box-load-active");
+}; activLoad();
 
 
 // массив с данными существующих пользователей
 
 export let users = [];
    
-
-// функция для показа коментария во время запроса с API
-
-const activLoad = () => {
-  return comBox.classList.add("box-load-active");
-}; activLoad();
     
   
 
-// Делаем запрос на API
+//запрос на API
 
-fetchPromise(renderUsers(listElement, getListUsersEdit, token))
+fetchPromise()
 .then((data) => {
   comBox.classList.remove("box-load-active");
   users = data;
-  renderUsers(listElement, getListUsersEdit, token);
+  renderTaskUsers(listElement, getListUsersEdit, token);
 })
-.catch((error) => { console.log(error);
+.catch((error) => { 
   alert("Что то пошло не так, повторите позже") ;
 });
     
@@ -46,6 +47,8 @@ fetchPromise(renderUsers(listElement, getListUsersEdit, token))
      
     
 // Добавление лайков
+
+
 export const likeFunctions = (token) => {
   const likeElements = document.querySelectorAll(".like-button");
   for (const likeElement of likeElements) {
@@ -62,20 +65,27 @@ export const likeFunctions = (token) => {
         users[index].active = "";
         users[index].like -= 1
       } 
-      renderUsers(listElement, getListUsersEdit, token);
+      renderTaskUsers(listElement, getListUsersEdit, token);
       
     })
   };
 }; 
-    
 
-export const renderTask = (nameInput, commentInput, token) => {  
+
+
+
+// Добавление комментариев
+
+export const addNewComment = (nameInput, commentInput, token) => { 
+ 
 // Привязываем обработчик на кнопку добавить
 const buttonElement = document.getElementById("addButton");
 const addForm = document.querySelector(".add-form");
     buttonElement.addEventListener("click", () => {
   nameInput.classList.remove("error");
   commentInput.classList.remove("error");
+  
+  
   if (nameInput.value === "") {
     nameInput.classList.add("error"); return
   } 
@@ -85,6 +95,9 @@ const addForm = document.querySelector(".add-form");
   buttonElement.disabled = true;    
   comBoxNew.classList.add("box-load-new-active");
   addForm.classList = "box-load";
+
+  // Пост запрос на Апи
+
   fetchPost(commentInput.value, nameInput.value, token)
   .then((response) => {
     comBoxNew.classList.remove("box-load-new-active"); 
@@ -104,14 +117,14 @@ const addForm = document.querySelector(".add-form");
       throw new Error()
     } 
   })
-  .then((response) => {
+  .then((response) => { 
     users = response;
     comBoxNew.classList.remove("box-load-new-active");
     addForm.classList = "add-form";
     buttonElement.disabled = false;
     nameInput.value = "";
     commentInput.value = "";
-    renderUsers(listElement, getListUsersEdit, token);
+    renderTaskUsers(listElement, getListUsersEdit, token);
   })
   .catch((error) => { 
     if(error.message == 400) { 

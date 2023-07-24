@@ -1,4 +1,6 @@
 
+// Дата и время
+
 export const dataTime = (date) => {
     let nowDate = date;
     nowDate.setDate(nowDate.getDate());
