@@ -1,8 +1,7 @@
 
 import { fetchPromise, fetchPost, loginUser, } from "./api.js";
 import { getListUsersEdit } from "./component/users-form.js";
-import { renderTaskUsers } from "./render.js"; 
-
+import { renderTaskUsers } from "./render.js";
 export const listElement = document.querySelector(".container");
 export const nameInput = document.getElementById("name-input");
 export const commentInput = document.getElementById("comment-input");
@@ -16,7 +15,7 @@ export const comBoxNew = document.querySelector(".box-load-new");
 
 export let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
 token = null;
-
+export let commentText = null;
 
 
 const activLoad = () => {
@@ -49,7 +48,7 @@ fetchPromise()
 // Добавление лайков
 
 
-export const likeFunctions = (token) => {
+export const likeFunctions = (token, commentInput) => {
   const likeElements = document.querySelectorAll(".like-button");
   for (const likeElement of likeElements) {
     const index = likeElement.dataset.index;
@@ -64,7 +63,7 @@ export const likeFunctions = (token) => {
         users[index].isLiked = false;
         users[index].active = "";
         users[index].like -= 1
-      } 
+      } commentText = commentInput.value ;
       renderTaskUsers(listElement, getListUsersEdit, token);
       
     })
@@ -124,7 +123,10 @@ const addForm = document.querySelector(".add-form");
     buttonElement.disabled = false;
     nameInput.value = "";
     commentInput.value = "";
+    commentText = ""; 
     renderTaskUsers(listElement, getListUsersEdit, token);
+    
+    
   })
   .catch((error) => { 
     if(error.message == 400) { 
@@ -149,8 +151,10 @@ const addForm = document.querySelector(".add-form");
       comBoxNew.classList.remove("box-load-new-active"); 
       alert("Что то пошло не так, повторите позже")
     };
+    
     addForm.classList = "add-form";
     buttonElement.disabled = false;
+    
   }); 
 }); 
 }; 
