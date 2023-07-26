@@ -3,6 +3,7 @@ import {fetchPromise} from "./api.js";
 import { renderAuthLink} from "./component/auth-link.js";
 import { addNewForm } from "./component/comment-form.js";
 import { existingUser, newUser } from "./component/login-form.js";
+import { format } from "./";
 
 // Рендер функция
 

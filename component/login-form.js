@@ -103,7 +103,7 @@ export const renderLoginForm =  (rootElement, token) => {
         // Запрос регистрации на Апи
         
         regUser({
-          name: name.value,
+          name: _.capitalize(name.value),
           login: login.value,
           password: password.value,
         }).then((user) => {

@@ -1,4 +1,6 @@
 import { dataTime } from "./data.js";
+import { format } from "date-fns";
+import _ from 'lodash';
 
 
 // документация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/v2/%5Bkey%5D/comments/README.md
@@ -29,7 +31,7 @@ export const fetchPromise = (token) => {
       return responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: dataTime(new Date(comment.date)),
+          date: format(new Date(comment.date), 'yyyy-MM-dd hh.mm.ss'),
           comments: comment.text,
           like: comment.likes,
           isLiked: false,

@@ -10,6 +10,7 @@ export const textName = document.querySelectorAll(".add-form-name");
 export const textComment = document.querySelectorAll(".add-form-text");
 export const comBox = document.querySelector(".box-load");
 export const comBoxNew = document.querySelector(".box-load-new");
+import { format } from "date-fns";
 
 // Переменная с токеном
 
